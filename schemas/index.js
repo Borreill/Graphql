@@ -1,17 +1,46 @@
 const graphql = require('graphql');
 const _ = require('lodash');
+const axios = require('axios');
 
 const {
     GraphQLSchema,
     GraphQLObjectType,
+    GraphQLList,
     GraphQLString,
-    GraphQLInt,
+    GraphQLInt
 } = graphql
 
-const users = [
-    { id: '1', firstName: 'Antoine', lastName: 'Laframboise', age: 34, email: "pafihudewo11-50@yopmail.com" },
-    { id: '2', firstName: 'Honore', lastName: 'Lagrange', age: 45, email: "jonukleva3569@yopmail.com" }
-];
+const CompanyType = new GraphQLObjectType({
+    name: 'Company',
+    fields: () => ({
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/companies/${parentValue.id}/users`).then((response) => {
+                    return response.data;
+                })
+            }
+        }
+    })
+});
+
+const JobType = new GraphQLObjectType({
+    name: 'Job',
+    fields: () => ({
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/executive_titles/${parentValue.id}/users`).then((response) => {
+                    return response.data;
+                })
+            }
+        }
+    })
+});
 const UserType = new GraphQLObjectType({
     name: 'User',
     fields: {
@@ -20,8 +49,26 @@ const UserType = new GraphQLObjectType({
         lastName: { type: GraphQLString },
         age: { type: GraphQLInt },
         email: { type: GraphQLString },
+        company: {
+            type: CompanyType,
+            resolve(parentValue, args) {
+                // console.log(parentValue)
+                return axios.get(`http://localhost:3000/companies/${parentValue.companyId}`).then((response) => {
+                    return response.data;
+                })
+            }
+        },
+        job: {
+            type: JobType,
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/executive_titles/${parentValue.jobId}`).then((response) => {
+                    return response.data;
+                })
+            }
+        }
     }
 });
+
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -30,7 +77,27 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parentValue, args) {
-                return _.find(users, { id: args.id });
+                return axios.get(`http://localhost:3000/users/${args.id}`).then((response) => {
+                    return response.data;
+                })
+            }
+        },
+        company: {
+            type: CompanyType,
+            args: { id: { type: GraphQLString } },
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/companies/${args.id}`).then((response) => {
+                    return response.data;
+                })
+            }
+        },
+        job: {
+            type: JobType,
+            args: { id: { type: GraphQLString } },
+            resolve(parentValue, args) {
+                return axios.get(`http://localhost:3000/executive_titles/${args.id}`).then((response) => {
+                    return response.data;
+                })
             }
         }
     }

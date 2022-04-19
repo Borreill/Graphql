@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Bird",
+      "age": 24,
+      "email": "birdramsey@nimon.com",
+      "companyId": "3",
+      "jobId": "1"
+    },
+    {
+      "id": "2",
+      "firstName": "Rosa",
+      "age": 26,
+      "email": "lillianburgess@sorh.com",
+      "companyId": "1",
+      "jobId": "2"
+    },
+    {
+      "id": "3",
+      "firstName": "Sarah",
+      "age": 25,
+      "email": "sarah@lao.com",
+      "companyId": "2",
+      "jobId": "3"
+    },
+    {
+      "id": "4",
+      "firstName": "Pascal",
+      "age": 24,
+      "email": "pascal@gronk.com",
+      "companyId": "4",
+      "jobId": "4"
+    },
+    {
+      "id": "5",
+      "firstName": "Pierre",
+      "age": 35,
+      "email": "pierre@akfon.com",
+      "companyId": "1",
+      "jobId": "3"
+    }
+  ],
+  "companies": [
+    {
+      "id": "1",
+      "name": "Mentallo"
+    },
+    {
+      "id": "2",
+      "name": "Lighthouse"
+    },
+    {
+      "id": "3",
+      "name": "Newtron Digital"
+    },
+    {
+      "id": "4",
+      "name": "Fly Media"
+    }
+  ],
+  "executive_titles": [
+    {
+      "id": "1",
+      "name": "CEO"
+    },
+    {
+      "id": "2",
+      "name": "Chief executive officer"
+    },
+    {
+      "id": "3",
+      "name": "Chief marketing officer"
+    },
+    {
+      "id": "4",
+      "name": "Community Manager"
+    }
+  ]
+}
